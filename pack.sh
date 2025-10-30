@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ARMV7_XCODE="/Volumes/Data/Miscellaneous/Build-environments/Xcode_armv7/Xcode.app"
+ARMV7_XCODE="/Volumes/Miscellaneous/Xcode_armv7/Xcode.app"
 
 set -e
 
@@ -16,7 +16,7 @@ echo "Building for iPhone OS"
 WITH_TAG=1 DEVELOPER_DIR=$ARMV7_XCODE WITH_ARMV7=1 make -j16 STYLES=RELEASE PLATFORMS=iphoneos
 
 echo "Packing"
-tar -cvf package/$(cat .tag_final).tar -C build iphoneos/polinaserial macosx/polinaserial
+tar -cvf package/$(cat .tag_final).tar -C build/app iphoneos/polinaserial macosx/polinaserial
 tar -rvf package/$(cat .tag_final).tar iboot_aux_hmacs.txt
 gzip -f package/$(cat .tag_final).tar
 

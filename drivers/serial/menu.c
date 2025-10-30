@@ -1,7 +1,11 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <string.h>
 #include <unistd.h>
-#include <app.h>
+
+#include <app/app.h>
+#include <term.h>
+#include <misc.h>
+
 #include "menu.h"
 #include "iokit.h"
 
@@ -113,7 +117,7 @@ static void spinner(bool update) {
 }
 
 static void draw() {
-    app_term_clear_page();
+    term_clear_page();
 
     app_version();
     app_print_cfg();
@@ -239,7 +243,7 @@ serial_dev_t *menu_pick() {
     CFRunLoopSourceRef keyboard_loop = CFFileDescriptorCreateRunLoopSource(kCFAllocatorDefault, fd, 0);
     CFRunLoopAddSource(loop, keyboard_loop, kCFRunLoopDefaultMode);
 
-    app_term_hide_cursor();
+    term_hide_cursor();
     started = true;
 
     draw();
@@ -256,8 +260,8 @@ serial_dev_t *menu_pick() {
     CFFileDescriptorInvalidate(fd);
     CFRelease(fd);
 
-    app_term_clear_line();
-    app_term_show_cursor();
+    term_clear_line();
+    term_show_cursor();
 
     if (outcome == MENU_DEVICE_SELECTED) {
         return selected;

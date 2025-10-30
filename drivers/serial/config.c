@@ -3,7 +3,8 @@
 #include <unistd.h>
 #include <string.h>
 
-#include <app.h>
+#include <app/app.h>
+#include <misc.h>
 
 #include "config.h"
 #include "baudrate_presets.h"

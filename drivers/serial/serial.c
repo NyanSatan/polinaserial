@@ -10,9 +10,11 @@
 #include <sys/event.h>
 #include <sys/time.h>
 
-#include <app.h>
+#include <app/app.h>
+#include <misc.h>
+#include <tty.h>
+#include <io.h>
 
-#include "app/misc.h"
 #include "menu.h"
 #include "iokit.h"
 #include "config.h"
@@ -85,12 +87,12 @@ out:
 #define LOOP_SHUTDOWN_ID    (613)
 
 static void *data_loop(void *arg) {
-    pthread_setname_np("serial driver data loop");
+    POLINA_SET_THREAD_NAME("serial driver data loop");
 
     driver_event_cb_t cb = arg;
     app_event_t event = APP_EVENT_NONE;
     struct kevent ke = { 0 };
-    uint8_t buf[DRIVER_MAX_BUFFER_SIZE];
+    uint8_t buf[IO_MAX_BUFFER_SIZE];
 
     REQUIRE_PANIC((ctx.kq = kqueue()) > 0);
 
@@ -199,7 +201,7 @@ out:
 }
 
 static void *restart_loop(void *arg) {
-    pthread_setname_np("serial driver restart loop");
+    POLINA_SET_THREAD_NAME("serial driver restart loop");
 
     ctx.restart_thr_run_loop = CFRunLoopGetCurrent();
     ctx.restart_success = false;

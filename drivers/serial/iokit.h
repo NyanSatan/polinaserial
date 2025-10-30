@@ -3,7 +3,8 @@
 
 #include <IOKit/IOKitLib.h>
 #include <stdbool.h>
-#include <app.h>
+#include <app/app.h>
+#include <ll.h>
 #include "menu.h"
 
 typedef void (*iokit_event_cb_t)(io_service_t service, uint64_t id, bool added);

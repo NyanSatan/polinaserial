@@ -1,0 +1,7 @@
+LOCAL_DIR := $(GET_LOCAL_DIR)
+
+OBJECTS += \
+	$(CURRENT_ROOT)/$(LOCAL_DIR)/main.o \
+	$(CURRENT_ROOT)/$(LOCAL_DIR)/halt.o
+
+CFLAGS += -I$(LOCAL_DIR)/include

@@ -2,7 +2,11 @@
 #include <string.h>
 #include <IOKit/IOKitLib.h>
 #include <IOKit/usb/USBSpec.h>
-#include <app.h>
+
+#include <app/app.h>
+#include <misc.h>
+#include <ll.h>
+
 #include "menu.h"
 #include "iokit.h"
 

@@ -11,11 +11,13 @@
 #include <sys/event.h>
 #include <sys/time.h>
 
+#include <app/app.h>
 #include <app/driver.h>
-#include <app/event.h>
-#include <app/halt.h>
-#include <app/misc.h>
-#include <app/tty.h>
+#include <io.h>
+#include <halt.h>
+#include <event.h>
+#include <misc.h>
+#include <tty.h>
 
 static int init(int argc, const char *argv[]) {
     return 0;
@@ -32,11 +34,11 @@ static int preflight() {
 const static uint8_t others[] = { 0x7, 0x9, 0xa, 0xb, 0xd, 0x1b };
 
 static void *random_loop(void *arg) {
-    pthread_setname_np("random driver loop");
+    POLINA_SET_THREAD_NAME("random driver loop");
 
     driver_event_cb_t cb = arg;
     app_event_t event = APP_EVENT_DISCONNECT_DEVICE;
-    uint8_t buf[DRIVER_MAX_BUFFER_SIZE];
+    uint8_t buf[IO_MAX_BUFFER_SIZE];
 
     while (idx < sizeof(data)) {
         uint32_t r = data[idx];
