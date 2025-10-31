@@ -19,7 +19,7 @@ GET_LOCAL_DIR = $(patsubst %/,%,$(dir $(lastword $(MAKEFILE_LIST))))
 OPTIONS :=
 OBJECTS :=
 
-CFLAGS := 
+CFLAGS :=
 
 include $(GET_LOCAL_DIR)/platforms/$(PLATFORM).mk
 
@@ -103,6 +103,6 @@ $(BINARY): $(OBJECTS)
 $(CURRENT_ROOT)/%.o: %.c
 	@echo "\tcompiling C: $<"
 	@$(DIR_HELPER)
-	@$(CC) $(CFLAGS) $(OPTIONS) -c $< -o $@ 
+	@$(CC) $(CFLAGS) $(OPTIONS) -c $< -o $@
 
 -include $(OBJECTS:.o=.d)

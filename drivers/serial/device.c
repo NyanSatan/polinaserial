@@ -39,14 +39,14 @@ void tty_set_attrs_from_config(struct termios *attrs, serial_config_t *config) {
     attrs->c_cflag |= (CLOCAL | CREAD);
     attrs->c_iflag |= (IGNPAR);
     attrs->c_oflag &= ~OPOST;
-    
+
     /* data bits */
     attrs->c_cflag &= ~CSIZE;
     switch (config->data_bits) {
         case 8:
             attrs->c_cflag |= CS8;
             break;
-        
+
         case 7:
             attrs->c_cflag |= CS7;
             break;
@@ -54,7 +54,7 @@ void tty_set_attrs_from_config(struct termios *attrs, serial_config_t *config) {
         case 6:
             attrs->c_cflag |= CS6;
             break;
-        
+
         case 5:
             attrs->c_cflag |= CS5;
             break;

@@ -165,7 +165,7 @@ static const char *iboot_find_file_for_hmac_internal(iboot_hmac_config_t *config
 
         const iboot_hmac_config_t *current = (const iboot_hmac_config_t *)&current_config[c];
 
-        if (current->hmac < hmac) { 
+        if (current->hmac < hmac) {
             l = c + 1;
         } else if (current->hmac > hmac) {
             r = c - 1;

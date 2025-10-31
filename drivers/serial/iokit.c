@@ -157,7 +157,7 @@ static IONotificationPortRef termination_notification_port = NULL;
 
 int iokit_register_serial_devices_events(iokit_event_cb_t cb) {
     CFRunLoopRef notification_run_loop = CFRunLoopGetCurrent();
-    
+
     CFMutableDictionaryRef matching_dict = IOServiceMatching("IOSerialBSDClient");;
 
     mach_port_t master_port = ___kIOMasterPortDefault;
@@ -180,21 +180,21 @@ int iokit_register_serial_devices_events(iokit_event_cb_t cb) {
         cb,
         &iterator
     );
-    
+
     if (ret != KERN_SUCCESS) {
         POLINA_ERROR("couldn't register add serial device notification");
         goto fail;
     }
-    
+
     iokit_serial_device_added_cb(cb, iterator);
-    
+
     termination_notification_port = IONotificationPortCreate(___kIOMasterPortDefault);
     CFRunLoopAddSource(
         notification_run_loop,
         IONotificationPortGetRunLoopSource(termination_notification_port),
         kCFRunLoopDefaultMode
     );
-    
+
     CFRetain(matching_dict);
     ret = IOServiceAddMatchingNotification(
         termination_notification_port,
@@ -204,18 +204,18 @@ int iokit_register_serial_devices_events(iokit_event_cb_t cb) {
         cb,
         &iterator
     );
-    
+
     if (ret != KERN_SUCCESS) {
         POLINA_ERROR("couldn't register remove serial device notification");
         goto fail;
     }
-    
+
     iokit_serial_device_removed_cb(cb, iterator);
-    
+
     __cf_release(matching_dict);
-    
+
     return 0;
-    
+
 fail:
     return -1;
 }

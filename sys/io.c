@@ -62,7 +62,7 @@ int io_out_cb(uint8_t *in_buf, size_t in_len) {
             case kSeqUnicode: {
                 if (cfg->filter_lolcat) {
                     if (seq_ctx.has_utf8_first_byte) {
-                        lolcatify = lolcat_push_one;   
+                        lolcatify = lolcat_push_one;
                     }
                 }
 
@@ -142,15 +142,15 @@ static void *io_user_input_thread(void *arg) {
         POLINA_ERROR("kqueue() failed");
         goto out;
     }
-    
+
     EV_SET(&ke, STDIN_FILENO, EVFILT_READ, EV_ADD, 0, 0, NULL);
     kevent(kq, &ke, 1, NULL, 0, NULL);
 
     char c = 0;
-    while (true) {         
+    while (true) {
         memset(&ke, 0, sizeof(ke));
         int i = kevent(kq, NULL, 0, &ke, 1, NULL);
-        
+
         if (i == 0) {
             continue;
         }

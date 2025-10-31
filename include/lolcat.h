@@ -34,7 +34,7 @@ int lolcat_push_one(
 /* resets color modes and etc. */
 void lolcat_reset();
 
-/* 
+/*
  * forces to output ANSI color sequence
  * upon next call into lolcat_push_*()
  */

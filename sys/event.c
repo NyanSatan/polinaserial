@@ -9,7 +9,7 @@ void event_init(event_t *event) {
 void event_signal(event_t *event, uint64_t val) {
     pthread_mutex_lock(&event->mutex);
     event->value = val;
-    pthread_cond_signal(&event->cond);  
+    pthread_cond_signal(&event->cond);
     pthread_mutex_unlock(&event->mutex);
 }
 

@@ -46,7 +46,7 @@ int serial_config_load(int argc, const char *argv[], serial_config_t *config) {
     char c;
     while ((c = getopt(argc, (char *const *)argv, SERIAL_ARGUMENTS)) != -1) {
         app_arg_consumed_t consumed = app_config_arg_consumed(optopt);
-        
+
         switch (consumed) {
             case APP_ARG_CONSUMED_WITH_ARG:
                 optind++;

@@ -5,7 +5,7 @@ OBJECTS += \
 	$(CURRENT_ROOT)/$(LOCAL_DIR)/config.o \
 	$(CURRENT_ROOT)/$(LOCAL_DIR)/device.o \
 	$(CURRENT_ROOT)/$(LOCAL_DIR)/menu.o \
-	$(CURRENT_ROOT)/$(LOCAL_DIR)/iokit.o	
+	$(CURRENT_ROOT)/$(LOCAL_DIR)/iokit.o
 
 WITH_UART_EXTRA ?= 0
 

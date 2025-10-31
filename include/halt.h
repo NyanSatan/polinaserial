@@ -1,11 +1,10 @@
 #ifndef POLINA_HALT_H
 #define POLINA_HALT_H
 
-
 __attribute__((noreturn))
 void _panic(const char *file, const char *func, int line, const char *fmt, ...);
 
-/* 
+/*
  * call panic() (printf-like) in case of an unexpected & fatal error,
  * it will print a traceback & other infos for debug
  */

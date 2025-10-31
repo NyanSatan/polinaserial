@@ -22,7 +22,7 @@ void serial_dev_list_destroy();
  * try to find serial device by dev node path,
  * useful for getting more information for cases
  * when user explicitly requested specific dev node
- * and not menu 
+ * and not menu
  */
 serial_dev_t *serial_dev_find_by_callout(const char *callout);
 

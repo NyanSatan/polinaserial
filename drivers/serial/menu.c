@@ -185,11 +185,11 @@ static void keyboard_callback(CFFileDescriptorRef fd, CFOptionFlags options, voi
                         break;
                     }
                 });
-    
+
                 if (!selected) {
                     goto cont;
                 }
-    
+
                 outcome = MENU_DEVICE_SELECTED;
                 break;
             }

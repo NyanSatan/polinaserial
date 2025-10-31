@@ -4,7 +4,7 @@
  *  - Unicode (UTF-8)
  *  - Control codes (C0 - bell & etc.)
  *  - Control sequences (only CSI)
- *  
+ *
  * Unrecognized sequences are tried to be processed as-is
  */
 

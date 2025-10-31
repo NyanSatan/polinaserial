@@ -138,7 +138,7 @@ int log_init(const char *dev_name) {
 
     if (snprintf(filename, sizeof(filename), "%d-%02d-%02d_%02d-%02d-%02d.log",
         tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec) >= sizeof(filename)) {
-        
+
         POLINA_ERROR("resulting filename for logging is getting too big (?!)");
         return -1;
     }

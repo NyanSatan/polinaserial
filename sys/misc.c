@@ -12,9 +12,9 @@ int parse_numeric_arg(const char *arg, int base, uint64_t *val, uint64_t min_val
     if (*stop || result > max_val || result < min_val) {
         return -1;
     }
-    
+
     *val = result;
-    
+
     return 0;
 }
 
