@@ -73,7 +73,7 @@ ifeq ($(APPLICATION),app)
 	EXTENSION 	:=
 else ifeq ($(APPLICATION),lib)
 	BASE 		:= $(BUILD_ROOT)/$(APPLICATION)/$(PLATFORM)/lib$(PROJ_NAME)
-	EXTENSION 	:= ".a"
+	EXTENSION 	:= .a
 endif
 
 ifeq ($(STYLE),RELEASE)
