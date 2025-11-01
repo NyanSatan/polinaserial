@@ -36,7 +36,7 @@ BUILD_ROOT := build
 
 all:	$(LIST)
 
-$(LIST):	application		=	$(word 1, $(subst -, ,$@))
+$(LIST):	application	=	$(word 1, $(subst -, ,$@))
 $(LIST):	platform	=	$(word 2, $(subst -, ,$@))
 $(LIST):	style		=	$(word 3, $(subst -, ,$@))
 $(LIST):

@@ -1,3 +1,5 @@
+/* stupid code for (single) linked lists */
+
 #ifndef POLINA_LL_H
 #define POLINA_LL_H
 

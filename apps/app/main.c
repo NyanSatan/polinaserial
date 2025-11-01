@@ -256,8 +256,7 @@ static app_event_t app_event_loop() {
 static int app_handle_user_input_cb(uint8_t c) {
     app_event_t event = APP_EVENT_NONE;
 
-    /* Ctrl+] */
-    if (c == 0x1D) {
+    if (c == 0x1D /* Ctrl+] */) {
         event = APP_EVENT_DISCONNECT_USER;
         goto err;
     }
@@ -300,6 +299,7 @@ int app_quiesce(int ret) {
         ret = -1;
     }
 
+    /* free aux iBoot HMACs if needed */
     if (config.filter_iboot) {
         iboot_destroy_aux_hmacs();
     }
@@ -416,6 +416,7 @@ int main(int argc, const char *argv[]) {
     /* initialize selected driver */
     REQUIRE_NOERR(ctx.driver->init(argc, argv), out);
 
+    /* make IO subsystem aware of selected options */
     io_set_config(&config);
 
     /* scroll terminal to a new page and clear it */

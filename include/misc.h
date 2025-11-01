@@ -3,6 +3,7 @@
 
 /*
  * Various useful macroses & functions
+ * XXX organize things properly?
  */
 
 #include <stdio.h>
@@ -10,7 +11,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <pthread.h>
-#include <halt.h>
+#include "halt.h"
 
 #define REQUIRE(_cond, _label) \
     if (!(_cond)) { \
