@@ -3,8 +3,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
-
-#include <config.h>
+#include "polina.h"
 
 #define IO_MAX_BUFFER_SIZE  (1024)
 

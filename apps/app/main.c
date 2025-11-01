@@ -19,13 +19,13 @@
 #include <tty.h>
 #include <term.h>
 #include <misc.h>
+#include <const.h>
 #include <event.h>
 #include <iboot.h>
-#include <config.h>
+#include <polina.h>
 #include <lolcat.h>
 
 #define DEFAULT_DRIVER      "serial"
-#define IBOOT_HMACS_VAR     "POLINASERIAL_IBOOT_HMACS"
 
 #define APP_ARGUMENTS   ":nkilghu:r"
 
@@ -331,6 +331,12 @@ static char *__get_tag() {
     strncpy(__build_tag, data, size);
 
     return __build_tag;
+}
+
+__attribute__((noreturn))
+void _panic_terminate() {
+    app_quiesce(-1);
+    abort();
 }
 
 void app_version() {

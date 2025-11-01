@@ -7,7 +7,7 @@
 #include <misc.h>
 #include <iboot.h>
 #include <lolcat.h>
-#include <config.h>
+#include <polina.h>
 
 
 static polina_config_t *cfg = NULL;

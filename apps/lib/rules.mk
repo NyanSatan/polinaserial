@@ -1,3 +1,6 @@
 LOCAL_DIR := $(GET_LOCAL_DIR)
 
 OBJECTS += \
+	$(CURRENT_ROOT)/$(LOCAL_DIR)/main.o
+
+CFLAGS += "-DBUILD_TAG=\"$(shell cat $(BUILD_TAG_FILE))\""
