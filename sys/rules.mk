@@ -9,5 +9,6 @@ OBJECTS += \
 	$(CURRENT_ROOT)/$(LOCAL_DIR)/log.o \
 	$(CURRENT_ROOT)/$(LOCAL_DIR)/lolcat.o \
 	$(CURRENT_ROOT)/$(LOCAL_DIR)/iboot.o \
+	$(CURRENT_ROOT)/$(LOCAL_DIR)/halt.o \
 	$(CURRENT_ROOT)/$(LOCAL_DIR)/seq.o \
 	$(CURRENT_ROOT)/$(LOCAL_DIR)/io.o
