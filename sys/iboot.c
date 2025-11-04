@@ -331,26 +331,27 @@ static int _comp_func(const void *one, const void *two) {
 }
 
 int iboot_load_aux_hmacs(const char *path) {
+    int ret = -1;
     char *cont = NULL;
     size_t len = 0;
 
     if (_read_file(path, &cont, &len) != 0) {
-        return -1;
+        goto out;
     }
 
     int cnt = 0;
     if (_parse_file(cont, len, NULL, &cnt) != 0) {
-        return -1;
+        goto out;
     }
 
     iboot_hmac_config_t *_aux = malloc(cnt * sizeof(iboot_hmac_config_t));
     if (!_aux) {
         POLINA_WARNING("out of memory?!");
-        return -1;
+        goto out;
     }
 
     if (_parse_file(cont, len, _aux, &cnt) != 0) {
-        return -1;
+        goto out;
     }
 
     qsort(_aux, cnt, sizeof(*_aux), _comp_func);
@@ -358,7 +359,14 @@ int iboot_load_aux_hmacs(const char *path) {
     aux_iboot_hmac_config = _aux;
     aux_iboot_hmac_config_count = cnt;
 
-    return 0;
+    ret = 0;
+
+out:
+    if (cont) {
+        free(cont);
+    }
+
+    return ret;
 }
 
 void iboot_destroy_aux_hmacs() {
