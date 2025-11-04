@@ -416,6 +416,12 @@ int main(int argc, const char *argv[]) {
     /* initialize selected driver */
     REQUIRE_NOERR(ctx.driver->init(argc, argv), out);
 
+    /* check for unaccounted args */
+    if (optind != argc) {
+        help(argv[0]);
+        return -1;
+    }
+
     /* make IO subsystem aware of selected options */
     io_set_config(&config);
 
