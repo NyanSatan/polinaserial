@@ -334,7 +334,7 @@ static char *__get_tag() {
 }
 
 __attribute__((noreturn))
-void _panic_terminate() {
+void __panic_terminate_hook() {
     app_quiesce(-1);
     abort();
 }

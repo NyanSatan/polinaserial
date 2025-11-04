@@ -6,8 +6,9 @@
 #include <misc.h>
 
 extern char __build_tag[];
+__attribute__((noreturn)) void __panic_terminate_hook();
 
-void _panic_print(const char *file, const char *func, int line, const char *fmt, ...) {
+void _panic(const char *file, const char *func, int line, const char *fmt, ...) {
     char panic_msg[1024]  = { 0 };
     char thread_name[128] = { 0 };
     void *callstack[128]  = { 0 };
@@ -33,4 +34,6 @@ void _panic_print(const char *file, const char *func, int line, const char *fmt,
     }
 
     POLINA_ERROR("\nsomething truly terrible has happened, please report this panic");
+
+    __panic_terminate_hook();
 }

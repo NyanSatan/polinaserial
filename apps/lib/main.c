@@ -118,7 +118,7 @@ int polina_start_io(int (*in_cb)(uint8_t c), int out) {
 }
 
 __attribute__((noreturn))
-void _panic_terminate() {
+void __panic_terminate_hook() {
     POLINA_ERROR("polina crashed, very bad!");
     polina_quiesce();
 
