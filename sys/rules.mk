@@ -7,6 +7,7 @@ OBJECTS += \
 	$(CURRENT_ROOT)/$(LOCAL_DIR)/ll.o \
 	$(CURRENT_ROOT)/$(LOCAL_DIR)/misc.o \
 	$(CURRENT_ROOT)/$(LOCAL_DIR)/log.o \
+	$(CURRENT_ROOT)/$(LOCAL_DIR)/thread.o \
 	$(CURRENT_ROOT)/$(LOCAL_DIR)/lolcat.o \
 	$(CURRENT_ROOT)/$(LOCAL_DIR)/iboot.o \
 	$(CURRENT_ROOT)/$(LOCAL_DIR)/halt.o \

@@ -11,6 +11,7 @@
 #include <misc.h>
 #include <term.h>
 #include <const.h>
+#include <thread.h>
 #include <iboot.h>
 #include <lolcat.h>
 #include <polina.h>
@@ -19,20 +20,6 @@
 char __build_tag[] = BUILD_TAG;
 
 static polina_config_t *cfg = NULL;
-
-void polina_quiesce() {
-    if (term_restore_attrs() != 0) {
-        POLINA_ERROR("could NOT restore terminal attributes - you might want to kill it");
-    }
-
-    if (cfg && !cfg->logging_disabled) {
-        log_queisce();
-    }
-
-    if (cfg && cfg->filter_iboot) {
-        iboot_destroy_aux_hmacs();
-    }
-}
 
 int polina_init(polina_config_t *_cfg, const char *log_name) {
     int ret = -1;
@@ -64,6 +51,7 @@ out:
     return ret;
 }
 
+static int output_kq = -1;
 static pthread_t output_thr = NULL;
 
 static void *output_thr_handler(void *arg) {
@@ -75,21 +63,27 @@ static void *output_thr_handler(void *arg) {
 
     struct kevent ke = { 0 };
 
-    int kq = kqueue();
-    if (kq == -1) {
+    output_kq = kqueue();
+    if (output_kq == -1) {
         POLINA_ERROR("kqueue() failed");
         goto out;
     }
 
+    thread_add_shutdown_ke(output_kq);
+
     EV_SET(&ke, out_fd, EVFILT_READ, EV_ADD, 0, 0, NULL);
-    kevent(kq, &ke, 1, NULL, 0, NULL);
+    kevent(output_kq, &ke, 1, NULL, 0, NULL);
 
     while (true) {
         memset(&ke, 0, sizeof(ke));
-        int i = kevent(kq, NULL, 0, &ke, 1, NULL);
+        int i = kevent(output_kq, NULL, 0, &ke, 1, NULL);
 
         if (i == 0) {
             continue;
+        }
+
+        if (thread_check_shutdown_ke(&ke)) {
+            goto out;
         }
 
         ssize_t r = read(out_fd, buf, sizeof(buf));
@@ -102,7 +96,8 @@ static void *output_thr_handler(void *arg) {
     }
 
 out:
-    close(kq);
+    close(output_kq);
+    output_kq = -1;
 
     return NULL;
 }
@@ -116,6 +111,24 @@ int polina_start_io(int (*in_cb)(uint8_t c), int out) {
     pthread_create(&output_thr, NULL, output_thr_handler, (void *)(uint64_t)out);
 
     return 0;
+}
+
+void polina_quiesce() {
+    thread_trigger_shutdown_ke(&output_thr, &output_kq);
+
+    io_quiesce();
+
+    if (cfg && !cfg->logging_disabled) {
+        log_queisce();
+    }
+
+    if (term_restore_attrs() != 0) {
+        POLINA_ERROR("could NOT restore terminal attributes - you might want to kill it");
+    }
+
+    if (cfg && cfg->filter_iboot) {
+        iboot_destroy_aux_hmacs();
+    }
 }
 
 __noreturn

@@ -21,4 +21,7 @@ void io_user_input_start();
 /* call this with data received from hardware to postprocess and print it in terminal */
 int io_out_cb(uint8_t *in_buf, size_t in_len);
 
+/* shutdown user input thread */
+void io_quiesce();
+
 #endif

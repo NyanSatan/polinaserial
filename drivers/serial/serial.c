@@ -11,6 +11,7 @@
 #include <sys/time.h>
 
 #include <app/app.h>
+#include <thread.h>
 #include <misc.h>
 #include <tty.h>
 #include <io.h>
@@ -84,8 +85,6 @@ out:
     return ret;
 }
 
-#define LOOP_SHUTDOWN_ID    (613)
-
 static void *data_loop(void *arg) {
     POLINA_SET_THREAD_NAME("serial driver data loop");
 
@@ -96,8 +95,7 @@ static void *data_loop(void *arg) {
 
     REQUIRE_PANIC((ctx.kq = kqueue()) > 0);
 
-    EV_SET(&ke, LOOP_SHUTDOWN_ID, EVFILT_USER, EV_ADD, 0, 0, NULL);
-    kevent(ctx.kq, &ke, 1, NULL, 0, NULL);
+    thread_add_shutdown_ke(ctx.kq);
 
     EV_SET(&ke, ctx.dev_fd, EVFILT_READ, EV_ADD, 0, 0, NULL);
     kevent(ctx.kq, &ke, 1, NULL, 0, NULL);
@@ -128,7 +126,7 @@ static void *data_loop(void *arg) {
                     goto out;
                 }
             }
-        } else if (ke.filter == EVFILT_USER && ke.ident == LOOP_SHUTDOWN_ID) {
+        } else if (thread_check_shutdown_ke(&ke)) {
             goto out_no_signal;
         }
     }
@@ -248,13 +246,7 @@ static int _write(uint8_t *buf, size_t len) {
 
 static int quiesce() {
     if (ctx.dev_fd != -1) {
-        struct kevent ke = { 0 };
-        EV_SET(&ke, LOOP_SHUTDOWN_ID, EVFILT_USER, 0, NOTE_TRIGGER, 0, NULL);
-        kevent(ctx.kq, &ke, 1, 0, 0, NULL);
-
-        pthread_join(ctx.data_loop_thr, NULL);
-        ctx.data_loop_thr = NULL;
-
+        thread_trigger_shutdown_ke(&ctx.data_loop_thr, &ctx.kq);
         close_fd();
     }
 

@@ -289,6 +289,9 @@ int app_quiesce(int ret) {
     /* shutting down the driver */
     ctx.driver->quiesce();
 
+    /* shutting down user input handling */
+    io_quiesce();
+
     /* shutting down logging subsystem - this can take a bit of time */
     if (!config.logging_disabled) {
         log_queisce();

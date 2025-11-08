@@ -6,9 +6,10 @@
 #include <log.h>
 #include <misc.h>
 #include <iboot.h>
+#include <const.h>
+#include <thread.h>
 #include <lolcat.h>
 #include <polina.h>
-
 
 static polina_config_t *cfg = NULL;
 static int (*user_input_cb)(uint8_t c) = NULL;
@@ -132,27 +133,35 @@ int io_out_cb(uint8_t *in_buf, size_t in_len) {
     return 0;
 }
 
+static int input_kq = -1;
+
 static void *io_user_input_thread(void *arg) {
     POLINA_SET_THREAD_NAME("user input loop");
 
     struct kevent ke = { 0 };
 
-    int kq = kqueue();
-    if (kq == -1) {
+    input_kq = kqueue();
+    if (input_kq == -1) {
         POLINA_ERROR("kqueue() failed");
         goto out;
     }
 
+    thread_add_shutdown_ke(input_kq);
+
     EV_SET(&ke, STDIN_FILENO, EVFILT_READ, EV_ADD, 0, 0, NULL);
-    kevent(kq, &ke, 1, NULL, 0, NULL);
+    kevent(input_kq, &ke, 1, NULL, 0, NULL);
 
     char c = 0;
     while (true) {
         memset(&ke, 0, sizeof(ke));
-        int i = kevent(kq, NULL, 0, &ke, 1, NULL);
+        int i = kevent(input_kq, NULL, 0, &ke, 1, NULL);
 
         if (i == 0) {
             continue;
+        }
+
+        if (thread_check_shutdown_ke(&ke)) {
+            goto out;
         }
 
         ssize_t r = read(STDIN_FILENO, &c, 1);
@@ -173,11 +182,16 @@ static void *io_user_input_thread(void *arg) {
     }
 
 out:
-    close(kq);
+    close(input_kq);
+    input_kq = -1;
 
     return NULL;
 }
 
 void io_user_input_start() {
     pthread_create(&user_input_thr, NULL, io_user_input_thread, NULL);
+}
+
+void io_quiesce() {
+    thread_trigger_shutdown_ke(&user_input_thr, &input_kq);
 }
