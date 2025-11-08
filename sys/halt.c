@@ -4,9 +4,10 @@
 #include <stdlib.h>
 #include <execinfo.h>
 #include <misc.h>
+#include <compiler.h>
 
 extern char __build_tag[];
-__attribute__((noreturn)) void __panic_terminate_hook();
+__noreturn void __panic_terminate_hook();
 
 void _panic(const char *file, const char *func, int line, const char *fmt, ...) {
     char panic_msg[1024]  = { 0 };

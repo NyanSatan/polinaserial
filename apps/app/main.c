@@ -24,6 +24,7 @@
 #include <iboot.h>
 #include <polina.h>
 #include <lolcat.h>
+#include <compiler.h>
 
 #define DEFAULT_DRIVER      "serial"
 
@@ -333,7 +334,7 @@ static char *__get_tag() {
     return __build_tag;
 }
 
-__attribute__((noreturn))
+__noreturn
 void __panic_terminate_hook() {
     app_quiesce(-1);
     abort();

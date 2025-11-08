@@ -14,6 +14,7 @@
 #include <iboot.h>
 #include <lolcat.h>
 #include <polina.h>
+#include <compiler.h>
 
 char __build_tag[] = BUILD_TAG;
 
@@ -117,7 +118,7 @@ int polina_start_io(int (*in_cb)(uint8_t c), int out) {
     return 0;
 }
 
-__attribute__((noreturn))
+__noreturn
 void __panic_terminate_hook() {
     POLINA_ERROR("polina crashed, very bad!");
     polina_quiesce();
