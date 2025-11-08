@@ -8,6 +8,7 @@
 #include <halt.h>
 #include <lolcat.h>
 #include <misc.h>
+#include <compiler.h>
 
 #define COLOR_256  "\x1B[38;5;"
 #define STOP       "m"
@@ -76,11 +77,14 @@ static bool lolcat_printable(char c) {
     return c > 0x20 && c < 0x7F;
 }
 
+/* 
+ * IDK if this `unlikely` has a real performance benifit,
+ * profiling gave mixed results, but won't hurt to keep it
+ */
 #define PUSH(__data, __len) \
     do { \
-        if (_out_len + __len > max_len) { \
-            POLINA_ERROR("\nmax_len: %zu, _out_len + __len: %zu", max_len, _out_len + __len); \
-            return -1; \
+        if (unlikely(_out_len + __len > max_len)) { \
+            panic("\nmax_len: %zu, _out_len + __len: %zu", max_len, _out_len + __len); \
         } \
         memcpy(out + _out_len, __data, __len); \
         _out_len += __len; \
