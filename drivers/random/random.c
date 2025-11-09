@@ -64,7 +64,7 @@ static void *random_loop(void *arg) {
         }
 
         idx += r;
-        usleep(data[idx] * 10);
+        usleep(data[idx] * 4);
     }
 
 out:
