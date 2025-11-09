@@ -216,7 +216,15 @@ int app_event_signal(app_event_t event) {
     return 0;
 }
 
+static
+void app_sigterm_handler(int s) {
+    app_event_signal(APP_EVENT_DISCONNECT_SYSTEM);
+}
+
 static app_event_t app_event_loop() {
+    /* set up SIGTERM handler - good when OS wants us quit */
+    signal(SIGTERM, app_sigterm_handler);
+
     app_event_t event = event_wait(&ctx.event);
 
     /*
@@ -230,6 +238,11 @@ static app_event_t app_event_loop() {
     POLINA_LINE_BREAK();
 
     switch (event) {
+        case APP_EVENT_DISCONNECT_SYSTEM: {
+            POLINA_INFO("[disconnected - OS request]");
+            break;
+        }
+
         case APP_EVENT_DISCONNECT_DEVICE: {
             POLINA_INFO("[disconnected - device disappeared]");
             break;
