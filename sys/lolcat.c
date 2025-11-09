@@ -18,8 +18,8 @@
 
 struct lolcat_color {
     char clr[4];
-    int raw;
-    int len;
+    uint8_t raw;
+    uint8_t len;
 };
 
 /*
