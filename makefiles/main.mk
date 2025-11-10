@@ -28,6 +28,7 @@ PYTHON ?= python3
 CFLAGS += $(ARCHS)
 CFLAGS += $(OS_MIN_VERSION)
 CFLAGS += -O3
+CFLAGS += -fvisibility=hidden
 CFLAGS += -Iinclude
 CFLAGS += -MMD
 CFLAGS += -DPRODUCT_NAME=\"$(PROJ_NAME)\"
