@@ -70,9 +70,17 @@ int io_out_cb(uint8_t *in_buf, size_t in_len) {
                 break;
             }
 
-            /* control characters, CSI sequences and unrecognized stuff don't get any special handling */
+            /* CSI sequences may reset color modes, so let's refresh lolcat */
+            case kSeqEscapeCSI: {
+                if (cfg->filter_lolcat) {
+                    lolcat_refresh();
+                }
+
+                break;
+            }
+
+            /* control characters and unrecognized stuff don't get any special handling */
             case kSeqControl:
-            case kSeqEscapeCSI:
             case kSeqUnknown:
                 break;
 

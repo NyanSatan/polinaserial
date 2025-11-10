@@ -78,7 +78,7 @@ static bool lolcat_printable(char c) {
 }
 
 /* 
- * IDK if this `unlikely` has a real performance benifit,
+ * IDK if this `unlikely` has a real performance benefit,
  * profiling gave mixed results, but won't hurt to keep it
  */
 #define PUSH(__data, __len) \
