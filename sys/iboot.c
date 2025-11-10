@@ -251,7 +251,7 @@ static int _read_file(const char *path, char **buf, size_t *len) {
 #define HMAC_MAX_RAW_LEN    (16 /* digits */ + 2 /* "0x" */)
 #define PATH_MAX_LEN        (PATH_MAX)
 
-static int _parse_line(const char *buf, size_t len, iboot_hmac_config_t *out) {
+static int _parse_line(char *buf, size_t len, iboot_hmac_config_t *out) {
     const char *delim = strchr(buf, ':');
 
     size_t hmac_raw_len = delim - buf;
@@ -279,12 +279,19 @@ static int _parse_line(const char *buf, size_t len, iboot_hmac_config_t *out) {
     }
 
     out->hmac = hmac;
-    out->file = strndup(buf + name_start, name_len);
+
+    /*
+     * There used to be a strndup() call,
+     * but allocating & copying the strings (also freeing before exiting)
+     * a few hundred times is not the best idea in terms of performance
+     */
+    out->file = buf + name_start;
+    *(out->file + name_len) = '\0';
 
     return 0;
 }
 
-static int _parse_file(const char *buf, size_t len, iboot_hmac_config_t out[], int *cnt) {
+static int _parse_file(char *buf, size_t len, iboot_hmac_config_t out[], int *cnt) {
     int _cnt = 0;
     off_t idx = 0;
 
@@ -330,17 +337,18 @@ static int _comp_func(const void *one, const void *two) {
     abort();
 }
 
+static char *aux_file_cont = NULL;
+
 int iboot_load_aux_hmacs(const char *path) {
     int ret = -1;
-    char *cont = NULL;
     size_t len = 0;
 
-    if (_read_file(path, &cont, &len) != 0) {
+    if (_read_file(path, &aux_file_cont, &len) != 0) {
         goto out;
     }
 
     int cnt = 0;
-    if (_parse_file(cont, len, NULL, &cnt) != 0) {
+    if (_parse_file(aux_file_cont, len, NULL, &cnt) != 0) {
         goto out;
     }
 
@@ -350,7 +358,7 @@ int iboot_load_aux_hmacs(const char *path) {
         goto out;
     }
 
-    if (_parse_file(cont, len, _aux, &cnt) != 0) {
+    if (_parse_file(aux_file_cont, len, _aux, &cnt) != 0) {
         goto out;
     }
 
@@ -362,8 +370,8 @@ int iboot_load_aux_hmacs(const char *path) {
     ret = 0;
 
 out:
-    if (cont) {
-        free(cont);
+    if (ret != 0 && aux_file_cont) {
+        free(aux_file_cont);
     }
 
     return ret;
@@ -371,13 +379,11 @@ out:
 
 void iboot_destroy_aux_hmacs() {
     if (aux_iboot_hmac_config && aux_iboot_hmac_config_count) {
-        for (size_t i = 0; i < aux_iboot_hmac_config_count; i++) {
-            free(aux_iboot_hmac_config[i].file);
-        }
-
         free(aux_iboot_hmac_config);
+        free(aux_file_cont);
     }
 
     aux_iboot_hmac_config = NULL;
     aux_iboot_hmac_config_count = 0;
+    aux_file_cont = NULL;
 }
