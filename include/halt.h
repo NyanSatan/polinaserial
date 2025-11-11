@@ -1,6 +1,9 @@
 #ifndef POLINA_HALT_H
 #define POLINA_HALT_H
 
+#include <compiler.h>
+
+__noreturn
 void _panic(const char *file, const char *func, int line, const char *fmt, ...);
 
 /*

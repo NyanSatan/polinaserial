@@ -14,7 +14,7 @@ bool thread_check_shutdown_ke(struct kevent *ke) {
 }
 
 void thread_trigger_shutdown_ke(pthread_t *thr, int *kq) {
-    /* pottentially racy if the thread closes by itself, but I guess the APIs should just silently fail? */
+    /* potentially racy if the thread closes by itself, but I guess the APIs should just silently fail? */
     if (*thr && *kq != -1) {
         struct kevent ke = { 0 };
         EV_SET(&ke, DATA_LOOP_SHUTDOWN_ID, EVFILT_USER, 0, NOTE_TRIGGER, 0, NULL);

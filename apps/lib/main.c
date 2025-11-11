@@ -1,5 +1,5 @@
 /*
- * Bolierplate code for using Polina as a library,
+ * Boilerplate code for using Polina as a library,
  * e.g. in Virtual iBoot Fun
  */
 
@@ -38,6 +38,7 @@ int polina_init(polina_config_t *_cfg, const char *log_name) {
         REQUIRE_NOERR(iboot_load_aux_hmacs(getenv(IBOOT_HMACS_VAR)), out);
     }
 
+    // XXX move this to polina_start_io()?
     REQUIRE_NOERR(term_save_attrs(), out);
     REQUIRE_NOERR(term_set_raw(cfg->filter_return), out);
 

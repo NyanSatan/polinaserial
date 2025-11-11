@@ -14,7 +14,6 @@
 #include <sys/stat.h>
 
 #include <misc.h>
-
 #include <iboot.h>
 #include "iboot_config.h"
 
