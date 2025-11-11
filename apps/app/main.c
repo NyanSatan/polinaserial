@@ -295,6 +295,12 @@ static int app_conn_cb() {
 
 static int app_restart_cb() {
     POLINA_INFO("[reconnected]\n");
+
+    /* POLINA_INFO() call above is going to reset color mode */
+    if (config.filter_lolcat) {
+        lolcat_refresh();
+    }
+
     return 0;
 }
 
