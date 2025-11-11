@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ARMV7_XCODE="/Volumes/Miscellaneous/Xcode_armv7/Xcode.app"
+ARMV7_XCODE="/Volumes/Miscellaneous/Xcode-armv7/Xcode.app"
 
 set -e
 

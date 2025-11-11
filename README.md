@@ -38,11 +38,19 @@ Serial port monitor program for Mac OS X and derivative platforms
 
 <details>
 
+### polinaserial-1.1
+* Restructured the code to allow building Polina as a static library to be used in 3rd-party projects
+* Minor improvements and bug fixes here and there
+	* Handle SIGTERM signal so the program can close gracefully upon OS reboot and etc.
+	* Lolcat internal state is now refreshed more often to make sure output is always colorized
+	* Removed aux iBoot HMACs that duplicate the hardcoded database
+	* Use less allocations to store aux iBoot HMACs at runtime (good for program start-up & shutdown performance)
+
 ### polinaserial-1.0.1
 * Fixed various bugs in argument parsing
 
 ### polinaserial-1
-Initial release
+* Initial release
 
 </details>
 
