@@ -4,7 +4,7 @@ Serial port monitor program for Mac OS X and derivative platforms
 
 **Still very experimental, use it on your own risk and etc. Let me know if there are any issues!**
 
-![](repo/demo.jpg)
+![](repo/demo.png)
 
 ## Features
 
