@@ -136,7 +136,11 @@ static void draw() {
             POLINA_INFO_NO_BREAK("%s", curr->usb_name);
 
             if (*curr->tty_suffix) {
-                POLINA_INFO_NO_BREAK("-%s", curr->tty_suffix);
+                if (*curr->tty_suffix != '-') {
+                    POLINA_INFO_NO_BREAK("-%s", curr->tty_suffix);
+                } else {
+                    POLINA_INFO_NO_BREAK("%s", curr->tty_suffix);
+                }
             }
 
             POLINA_MISC_NO_BREAK(" on ");
