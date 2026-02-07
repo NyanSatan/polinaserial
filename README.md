@@ -38,6 +38,9 @@ Serial port monitor program for Mac OS X and derivative platforms
 
 <details>
 
+### polinaserial-1.1.1
+* Menu cosmetic fix - do not print dash `-` if suffix starts with it
+
 ### polinaserial-1.1
 * Restructured the code to allow building Polina as a static library to be used in 3rd-party projects
 * Minor improvements and bug fixes here and there
