@@ -403,8 +403,6 @@ static void help(const char *program_name) {
     printf("\tHMAC:FILENAME\n");
     printf("\t...\n");
     printf("\n");
-    printf("check \"iboot_aux_hmacs.txt\" provided along with the program for reference\n");
-    printf("\n");
 
     printf("default DRIVER is \"" DEFAULT_DRIVER "\"\n");
     printf("logs are collected to ~/Library/Logs/" PRODUCT_NAME "/\n");

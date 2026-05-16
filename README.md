@@ -10,7 +10,6 @@ Serial port monitor program for Mac OS X and derivative platforms
 
 * Automatic obfuscated iBoot logs deobfuscation, when possible
     * All files available in the iOS 9 iBoot source code leak & 600+ recovered ones, including newer files that were never a part of the leak
-		* The ones I'm less confident about are shipped in a separate file (`iboot_aux_hmacs.txt`) that you can pass via `POLINASERIAL_IBOOT_HMACS` environment variable
 
 * Input/output filtering
     * Automatically add carriage return (`\r`) to line breaks (`\n`)
@@ -37,6 +36,10 @@ Serial port monitor program for Mac OS X and derivative platforms
 ## Changelog
 
 <details>
+
+### polinaserial-1.1.3
+* Additional iBoot HMACs are now hardcoded into the executable
+	* `POLINASERIAL_IBOOT_HMACS` env variable can still be provided to load your own mappings
 
 ### polinaserial-1.1.2
 * Added 70+ new iBoot log HMAC mappings
@@ -117,8 +120,6 @@ it must be a path to a text file with the following structure:
 		HMAC:FILENAME
 		HMAC:FILENAME
 		...
-
-check "iboot_aux_hmacs.txt" provided along with the program for reference
 
 default DRIVER is "serial"
 logs are collected to ~/Library/Logs/polinaserial/
