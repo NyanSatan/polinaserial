@@ -38,7 +38,7 @@ Serial port monitor program for Mac OS X and derivative platforms
 <details>
 
 ### polinaserial-1.1.3
-* Additional iBoot HMACs are now hardcoded into the executable
+* The additional iBoot HMACs are now hardcoded into the executable
 	* `POLINASERIAL_IBOOT_HMACS` env variable can still be provided to load your own mappings
 
 ### polinaserial-1.1.2
@@ -72,7 +72,6 @@ Serial port monitor program for Mac OS X and derivative platforms
 ```
 
 * Add `-i` to deobfuscate RELEASE iBoot logs
-	* Pass `POLINASERIAL_IBOOT_HMACS=/path/to/iboot_aux_hmacs.txt` as environment variable to load more iBoot HMAC mappings, or export it via shell configuration scripts
 
 * Add `-l` to paint output into rainbow colors (lolcat)
 
@@ -82,7 +81,7 @@ Serial configuration defaults to **115200** baud rate, **8 data bits**, **1 stop
 
 ```
 ➜  ~ polinaserial -h
-polinaserial-1
+polinaserial-1.1.3
 made by john (@nyan_satan)
 
 usage: polinaserial DRIVER <options>
