@@ -9,7 +9,7 @@ Serial port monitor program for Mac OS X and derivative platforms
 ## Features
 
 * Automatic obfuscated iBoot logs deobfuscation, when possible
-    * All files available in the iOS 9 iBoot source code leak & 600+ recovered ones, including newer files that were never a part of the leak
+    * All files available in the iOS 9 iBoot source code leak & 800+ recovered ones, including newer files that were never a part of the leak
 
 * Input/output filtering
     * Automatically add carriage return (`\r`) to line breaks (`\n`)
@@ -36,6 +36,9 @@ Serial port monitor program for Mac OS X and derivative platforms
 ## Changelog
 
 <details>
+
+### polinaserial-1.1.4
+* Added almost 200 new iBoot log HMAC mappings
 
 ### polinaserial-1.1.3
 * The additional iBoot HMACs are now hardcoded into the executable
