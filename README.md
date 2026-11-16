@@ -87,7 +87,7 @@ Serial configuration defaults to **115200** baud rate, **8 data bits**, **1 stop
 
 ```
 ➜  ~ polinaserial -h
-polinaserial-1.1.3
+polinaserial-1.1.5
 made by john (@nyan_satan)
 
 usage: polinaserial DRIVER <options>
@@ -111,7 +111,7 @@ available filter options:
 	-k	replace delete keys (0x7F) with backspace (0x08), good for diags
 	-i	try to identify filenames in obfuscated iBoot output
 
-available miscallenous options:
+available miscellaneous options:
 	-r	try to reconnect in case of connection loss
 	-u <usecs>	delay period in microseconds after each inputted character,
 			default - 0 (no delay), 20000 is good for XNU

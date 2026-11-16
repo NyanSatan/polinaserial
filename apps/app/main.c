@@ -387,7 +387,7 @@ static void help(const char *program_name) {
     printf("\t-i\ttry to identify filenames in obfuscated iBoot output\n");
     printf("\n");
 
-    printf("available miscallenous options:\n");
+    printf("available miscellaneous options:\n");
     printf("\t-r\ttry to reconnect in case of connection loss\n");
     printf("\t-u <usecs>\tdelay period in microseconds after each inputted character,\n");
     printf("\t\t\tdefault - 0 (no delay), 20000 is good for XNU\n");
