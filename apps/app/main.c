@@ -412,6 +412,7 @@ int main(int argc, const char *argv[]) {
     POLINA_SET_THREAD_NAME("main");
 
     int ret = -1;
+    char dev_name[PATH_MAX + 1] = { 0 };
 
     /* getting driver & advancing args if needed */
     if (app_get_driver(&ctx.driver, &argc, &argv) != 0) {
@@ -465,11 +466,11 @@ int main(int argc, const char *argv[]) {
     /* driver preflight - menu and etc. */
     REQUIRE_NOERR(ctx.driver->preflight(), out);
 
+    /* grab device name for logging and terminal title */
+    ctx.driver->log_name(dev_name, sizeof(dev_name));
+
     /* initialize logging subsystem if needed */
     if (!config.logging_disabled) {
-        char dev_name[PATH_MAX + 1] = { 0 };
-        ctx.driver->log_name(dev_name, sizeof(dev_name));
-
         REQUIRE_NOERR(log_init(dev_name), out);
     }
 
@@ -483,6 +484,9 @@ int main(int argc, const char *argv[]) {
 
     /* starting the driver */
     REQUIRE_NOERR(ctx.driver->start(io_out_cb, app_conn_cb), out);
+
+    /* set terminal title */
+    term_set_title(dev_name);
 
     /* create user input handler thread */
     io_set_input_cb(app_handle_user_input_cb);

@@ -17,6 +17,8 @@ void term_clear_line();
 void term_hide_cursor();
 void term_show_cursor();
 
+void term_set_title(const char *title);
+
 int term_set_raw(bool filter_return);
 
 #endif

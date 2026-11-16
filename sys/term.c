@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include <termios.h>
 #include <sys/ioctl.h>
@@ -13,6 +14,7 @@
 #define CLEAR_LINE      "\033[2K\r"
 #define HIDE_CURSOR     "\033[?25l"
 #define SHOW_CURSOR     "\033[?25h"
+#define SET_TITLE_FMT   "\033]0;%s\007"
 
 int term_scroll() {
     struct winsize w = { 0 };
@@ -39,6 +41,12 @@ void term_hide_cursor() {
 
 void term_show_cursor() {
     printf(SHOW_CURSOR);
+}
+
+void term_set_title(const char *title) {
+    char tmp[48] = { 0 };
+    snprintf(tmp, sizeof(tmp), SET_TITLE_FMT, title);
+    write(STDOUT_FILENO, tmp, strlen(tmp));
 }
 
 static bool attrs_were_saved = false;

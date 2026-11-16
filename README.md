@@ -37,6 +37,9 @@ Serial port monitor program for Mac OS X and derivative platforms
 
 <details>
 
+### polinaserial-1.1.5
+* Now terminal title is set to current device name
+
 ### polinaserial-1.1.4
 * Added almost 200 new iBoot log HMAC mappings
 
